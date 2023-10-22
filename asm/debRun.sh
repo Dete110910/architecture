@@ -13,5 +13,4 @@ ld -o $fileName debug$fileName.o
 
 gdb $fileName
 
-set disassembly-flavour intel
 
