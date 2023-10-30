@@ -80,37 +80,29 @@
 
 
 segment .data
-;
-; initialized data is put in the data segment here
-;
-prompt1 db    "Enter a number: ", 0      
-prompt2 db    "Enter 1 to continue. Otherwise the program will close", 0
-outmsg1 db    "Square of input is: ", 0
-outmsg2 db    "Cube of input is: ", 0
-outmsg3 db    "Cube of input times 25 is: ", 0
-outmsg4 db    "Quotient of cube/100 is: ", 0
-outmsg5 db    "Remainder of cube/100 is: ", 0
-outmsg6 db    "The negation of remainder is: ", 0
 
+prompt1 db    "Enter a number: ", 0						; Defines prompt1 message with null character at the end 
+prompt2 db    "Enter 1 to continue. Otherwise the program will close. ", 0	; Defines prompt2 message with null character at the end
+outmsg1 db    "Square of input is: ", 0						; Defines outmsg1 message with null character at the end
+outmsg2 db    "Cube of input is: ", 0						; Defines outmsg1 message with null character at the end
+outmsg3 db    "Cube of input times 25 is: ", 0					; Defines outmsg1 message with null character at the end
+outmsg4 db    "Quotient of cube/100 is: ", 0					; Defines outmsg1 message with null character at the end
+outmsg5 db    "Remainder of cube/100 is: ", 0					; Defines outmsg1 message with null character at the end
+outmsg6 db    "The negation of remainder is: ", 0				; Defines outmsg1 message with null character at the end
 
 twenty_five equ 25
-one_hundred dd 100.0
 
 
 segment .bss
-;
-; uninitialized data is put in the bss segment
-;
 
-input1 resd 1
-input2 resd 1
-result resd 1
-square resd 1
-cube resd 2
-cube_times_tf resd 2
-quotient_div_100 resd 2
-remainder resd 2
-neg_remainder resd 2
+input1 resd 1									; Defines input1 variable reserving 4 bytes of length (1 dword)
+input2 resd 1									; Defines input2 variable reserving 4 bytes of length (1 dword)
+square resd 1									; Defines square variable reserving 4 bytes of length (1 dword)
+cube resd 2									; Defines cube variable reserving 8 bytes of length (2 dword)
+cube_times_tf resd 2								; Defines cube_times_tf variable reserving 8 bytes of length (2 dword)
+quotient_div_100 resd 2								; Defines quotient_div_100 variable reserving 2 bytes of length (2 dword)
+remainder resd 2								; Defines remainder variable reserving 8 bytes of length (2 dword)
+neg_remainder resd 2								; Defines neg_remainder variable reserving 8 bytes of length (2 dword)
 
 segment .text
         global  asm_main
@@ -148,43 +140,6 @@ start:
 	cmp eax, 1							; Compare the eax value with 1. It set the condition code in the machine status word
 	je start							; Conditional jump that are based on the status of a set of condition codes stores in a special register called machine status word. If the cmp operation performed is true, jump to start label
 	jne end								; Jump to end label if the last cmp operation performed is not equal
-
-;	mov eax, [cube]
-;	cdq
-;	mov ecx, 100
-;	idiv ecx
-;	call print_nl
-;	call print_int
-
-;	mov eax, edx
-;	call print_nl
-;	call print_int
-
-;	mov ecx, eax
-;	mov eax, outmsg4
-;	call print_string
-;	mov eax, ecx
-;	call print_int
-;	call print_nl
-
-;	fld dword [cube]
-;	fdiv dword [one_hundred]
-;	fstp dword [quotient_cube_div_by_100]
-;	mov eax, [quotient_cube_div_by_100]
-;	call print_int
-;	call print_nl
-
-;	fld dword [cube]
-;	fdiv dword [one_hundred]
-;	fprem
-;	fstp dword [remainder]
-;	mov eax, [remainder]
-;	call print_int
-;	call print_nl
-
-
-
-;	print_result_with_nl outmsg4, quotient_cube_div_by_100 
 
 end:
         popa
