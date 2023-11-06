@@ -1,8 +1,8 @@
 #/!bin/bash
-echo "Write the files name (without extension)"
-read fileName
+#echo "Write the files name (without extension)"
+#read fileName
 
-nasm -f elf32 $fileName.asm -o $fileName.o
-ld -m elf_i386 $fileName.o -o $fileName
+nasm -f elf32 $1.asm -o $1.o
+ld -m elf_i386 $1.o -o $1
 
-./$fileName
+./$1
