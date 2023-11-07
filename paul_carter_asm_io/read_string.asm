@@ -32,7 +32,7 @@ yes db "y", 0
 segment .bss
 age resd 1
 name resb 22
-continue resb 2
+response resb 2
 
 segment .text
         global  asm_main
@@ -40,31 +40,30 @@ asm_main:
         enter   0,0               ; setup routine
         pusha
 	
+	mov eax, prompt1
+	call print_string
+	read_string name, 20
+	
 	mov eax, prompt2
 	call print_string
 	call read_int
 
 	mov [age], eax
 
-	mov eax, prompt1
-	call print_string
-	read_string name, 20
-
-
 	mov eax, name
-;	call print_string
-	
-	;mov eax, [age]
-	;cmp eax, 12
-	;jle iskid
+	call print_string
 
-	;cmp eax, 18
-	;jle isteenager
+	mov eax, [age]
+	cmp eax, 12
+	jle iskid
 
-	;cmp eax, 25
-	;jle isadult
+;	cmp eax, 18
+;	jle isteenager
 
-	;jne isold
+;	cmp eax, 25
+;	jle isadult
+
+;	jne isold
 ;	jmp next_action
 
 iskid:
@@ -94,9 +93,9 @@ isold:
 next_action:
 	mov eax, prompt3
 	call print_string
-;	call read_char
-	read_string continue, 4
-	;call read_char
+;	read_string response, 2
+	call print_nl
+	call read_char
 ;	je asm_main
 ;	jne endprogram
 
