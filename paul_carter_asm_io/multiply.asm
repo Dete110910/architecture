@@ -27,12 +27,14 @@
 	mov eax, %1
 	mov ebx, [eax]
 	mov edx, 0
+
 loop_start:
 	mov eax, outmsg
 	call print_string
 
 	imul ebx, edx
-	mov eax, ebx
+
+	mov eax, [input1]
 	call print_int
 
 	mov eax, times1
@@ -43,8 +45,12 @@ loop_start:
 
 	mov eax, equal
 	call print_string
-
+	
+	mov eax, ebx
+	call print_int
 	call print_nl
+
+	inc edx
 	loop loop_start
 end_multiply:
 	popa
@@ -85,7 +91,7 @@ asm_main:
 	
 	print_store prompt1, input1
 	
-	multiply input1, 4
+	multiply input1, 10 	; the idea is that the second parameter is the number of times the operation is to be performed
 
         popa
         mov     eax, 0            ; return back to C
