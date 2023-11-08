@@ -44,10 +44,10 @@ loop_start:
 	mov eax, outmsg
 	call print_string
 	
-	mov ebx, [input1]
+	mov ebx, [module]
 	imul ebx, edx
 
-	mov eax, [input1]
+	mov eax, [module]
 	call print_int
 
 	mov eax, times1
@@ -80,8 +80,9 @@ segment .data
 	
 	header db "Multiplication table", 0xa, 0
 	line db "------------------------", 0xa, 0
-	prompt1 db "Enter a number: ", 0
+	prompt1 db "Enter the limit number: ", 0
 	outmsg db  "The result is -> ", 0
+	outmsg1 db "The selected number was: ", 0
 	times1 db " x ", 0
 	equal db " = ", 0
 	prompt2 db "Do you want to continue (y) or (n): "
@@ -92,7 +93,9 @@ segment .data
 segment .bss
 	
 	input1 resd 1
-	answer resd 1
+	random resb 1
+	answer resb 2
+	module resb 1
 
 segment .text
         global  asm_main
@@ -104,8 +107,26 @@ asm_main:
 	print_header
 	
 	print_store prompt1, input1
+
+	mov eax, 0x163
+	mov ebx, random
+	mov ecx, 1
+	mov edx, 0
+	int 0x80
+
+	mov eax, [random]
+	mov ebx, [input1]
+	idiv ebx
+	mov [module], edx
+
+	mov eax, outmsg1
+	call print_string
+	mov eax, [module]
+	call print_int
+	call print_nl
+
 	
-	multiply_print input1, 10 	; the idea is that the second parameter is the number of times the operation is to be performed
+	multiply_print module, 10 	; the idea is that the second parameter is the number of times the operation is to be performed
 
 	print_store_char prompt2, answer
 
