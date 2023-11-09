@@ -33,7 +33,7 @@
 	popa
 %endmacro
 
-%macro multiply_print 2
+%macro multiply_print 1
 	pusha
 	mov ecx, 10
 	mov eax, %1
@@ -126,7 +126,7 @@ asm_main:
 	call print_nl
 
 	
-	multiply_print module, 10 	; the idea is that the second parameter is the number of times the operation is to be performed
+	multiply_print module 	; the idea is that the second parameter is the number of times the operation is to be performed
 
 	print_store_char prompt2, answer
 
